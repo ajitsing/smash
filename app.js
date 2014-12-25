@@ -17,6 +17,8 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
+console.log('starting app with cache=' + JSON.parse(process.env.CACHE));
+
 app.post('/smash.json', smash.collectDataFromFacts);
 
 http.createServer(app).listen(app.get('port'), function(){

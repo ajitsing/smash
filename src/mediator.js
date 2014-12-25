@@ -14,19 +14,30 @@ exports.getDataFromFacts = function(factUrls, callback){
 };
 
 var makeRequest = function(url, callback){
-	memcache.preRequest(url.href, function(result){
-		result ? callback(result) : actualRequest(url, callback);
-	});
+	if(JSON.parse(process.env.CACHE)){
+		memcache.preRequest(url.href, function(result){
+			result ? callback(JSON.parse(result)) : actualRequest(url, callback);
+		});
+
+	} else {
+		actualRequest(url, callback);
+	}
 };
 
 var actualRequest = function(url, callback){
 	console.log("=> making actual request!!!!");
 
 	http.get(url, function(resp){
+		var data = '';
 		resp.on('data', function(buf){
-			var data = JSON.parse(buf.toString('utf8', 0, {}));
-			memcache.createMemcache(url.href, JSON.stringify(data));
-			callback(data);
+			data += buf.toString();
+
+		}).on('end', function(){
+			if(JSON.parse(process.env.CACHE)){
+				memcache.createMemcache(url.href, JSON.stringify(data));
+			}
+			callback(JSON.parse(data));
+
 		}).on('error', function(err){
 			console.error('error while getting data from endpoint => ' + url);
 			console.error(err);
