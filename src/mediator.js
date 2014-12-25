@@ -25,8 +25,6 @@ var makeRequest = function(url, callback){
 };
 
 var actualRequest = function(url, callback){
-	console.log("=> making actual request!!!!");
-
 	http.get(url, function(resp){
 		var data = '';
 		resp.on('data', function(buf){

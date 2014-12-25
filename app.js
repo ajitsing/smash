@@ -17,7 +17,9 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
-console.log('starting app with cache=' + JSON.parse(process.env.CACHE));
+if(JSON.parse(process.env.CACHE)){
+  console.log('[WARN] - Starting app with cache, and cache will be invalidated after ' + process.env.INVALIDATE_CACHE_AFTER  + ' seconds.');
+}
 
 app.post('/smash.json', smash.collectDataFromFacts);
 

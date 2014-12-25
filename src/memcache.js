@@ -24,9 +24,9 @@ exports.preRequest = function(key, callback){
 
 exports.createMemcache = function(key, value){
 	val = JSON.parse(value);
-
-	memcached.set(key, val, 60000, function( err, result ){
-	  console.dir(result);
+	var invalidateCacheAfter = JSON.parse(process.env.INVALIDATE_CACHE_AFTER);
+	memcached.set(key, val, invalidateCacheAfter, function( err, result ){
 	  err && console.error( "error => " + err );
+	  console.dir(result);
 	});
 };
