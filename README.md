@@ -10,7 +10,8 @@ Smash
 If you have a service which calls N number of services as shown in the picture, and your service is not cuncurrent
 enough. Then smash is a perfect candidate for your service.
 
-![Alt text](https://github.com/ajitsing/ScreenShots/blob/master/smash.png "Smash")
+
+<img src="https://github.com/ajitsing/ScreenShots/blob/master/smash.png" width="300px" height="300px" />
 
 ###Usage
 
